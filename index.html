@@ -405,7 +405,7 @@ code{font-family:var(--font-mono);font-size:12.5px;background:var(--panel);paddi
 
 const DEFAULTS = [
   // 2210D2 matched ActiveOBD on 2026-11-01 (raw 100 = 50 °C). 221017 is not supported on this TCU.
-  { on:true,  name:"CVT",         hdr:"7E1", cmd:"2210D2", rep:"6210D2", f:"A-50", unit:"°C", min:0,  max:130, warn:100, crit:115 },
+  { on:true,  name:"CVT",         hdr:"7E1", cmd:"2210D2", rep:"6210D2", f:"A-50", unit:"°C", min:0,  max:130, warn:110, crit:120 },
   { on:true,  name:"Coolant",     hdr:"7E0", cmd:"0105",   rep:"4105",   f:"A-40", unit:"°C", min:0,  max:130, warn:105, crit:115 },
   { on:true,  name:"Engine oil",  hdr:"7E0", cmd:"015C",   rep:"415C",   f:"A-40", unit:"°C", min:0,  max:150, warn:120, crit:135 },
   // 2210C9: 0 in P, raw 66 in D on the brake while ActiveOBD showed 33 % — hence A/2.
@@ -438,7 +438,7 @@ const DEFAULTS = [
   { on:false, log:true, name:"TCU 1145?", hdr:"7E1", cmd:"221145", rep:"621145", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 }
 ];
 
-const STORE_KEY = "xv-gauge-params-v4";   // v4: unidentified TCU speeds logged
+const STORE_KEY = "xv-gauge-params-v5";   // v5: CVT warn 110 / crit 120 (plateau ~105 on long drives)
 
 function loadParams(){
   try{
