@@ -40,7 +40,7 @@ These are verified on a **2016 Subaru XV / Crosstrek 2.0i, FB20 engine, TR580 CV
 
 | Reading | Header | Request | Formula | Notes |
 |---|---|---|---|---|
-| CVT fluid temp | 7E1 | 2210D2 | A-50 °C | `221017` (often quoted online) is **not** supported on this TCU |
+| CVT fluid temp | 7E1 | 2210D2 | A-50 °C | `221017` (often quoted online) is **not** supported on this TCU. See below |
 | AWD duty | 7E1 | 2210C9 | A/2 % | 0 in P, ~33 % in D |
 | CVT ratio | 7E1 | 22113E | (A*256+B)/256 | 2.54 at rest → ~0.6 cruising |
 | Lock-up duty | 7E1 | 2210C8 | A/2 % | 0 below ~15 km/h, full when cruising. Formula by analogy, not yet checked vs ActiveOBD |
@@ -51,6 +51,13 @@ These are verified on a **2016 Subaru XV / Crosstrek 2.0i, FB20 engine, TR580 CV
 The page also logs RPM, speed, load, throttle, intake and ambient temperature, plus a few unidentified TCU values that are still being worked out.
 
 **Other Subarus:** the standard readings (coolant, oil, voltage) work on almost any car. The `22xxxx` codes are specific to the computer, and may differ on other years, engines or gearboxes. Use **Find a parameter** to look for them, and please share what you verify. See below.
+
+**CVT temperature on other models.** These are reports from other people, not verified here:
+
+- **`7E1 2210D2`, `A-50`:** the same code and formula are used for a Forester XT / WRX in [mateusleom/ESP32-OBD2-Gauge](https://github.com/mateusleom/ESP32-OBD2-Gauge), found independently.
+- **`7E1 221017`:** reported on a [Bob Is The Oil Guy thread](https://bobistheoilguy.com/forums/threads/subaru-cvt-fluid-temp-checks.309031/) for 2014+ TR580/TR690 gearboxes, with the same formula in °F (`A*9/5-58`). Some gearbox computers answer it and some don't (this XV doesn't).
+
+If one of the two doesn't answer on your car, try the other. Either way, check the reading against a known-good tool before you trust it.
 
 ## Add your car
 
