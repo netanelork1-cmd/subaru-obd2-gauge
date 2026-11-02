@@ -1,0 +1,48 @@
+name: New code
+description: Share a reading you verified on your own car
+title: "[code] <reading> on <model> <year>"
+labels: ["new code"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Only codes you have **read on a real car and checked against a trusted tool** (ActiveOBD, SSM, a factory scan tool). No guesses from forums. Read requests only.
+  - type: input
+    id: car
+    attributes:
+      label: Car
+      description: Model, year, engine, gearbox
+      placeholder: "2018 XV 2.0i, FB20, TR580"
+    validations:
+      required: true
+  - type: input
+    id: reading
+    attributes:
+      label: Reading
+      placeholder: "CVT fluid temperature"
+    validations:
+      required: true
+  - type: input
+    id: request
+    attributes:
+      label: Header and request
+      placeholder: "7E1 2210D2"
+    validations:
+      required: true
+  - type: input
+    id: formula
+    attributes:
+      label: Formula
+      placeholder: "A-50"
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: How you verified it
+      description: Raw replies, and what the trusted tool showed at the same moment, ideally at two different values.
+      placeholder: |
+        raw 0x96 (150) → 100 °C, ActiveOBD showed 100 °C
+        raw 0x82 (130) → 80 °C, ActiveOBD showed 80 °C
+    validations:
+      required: true

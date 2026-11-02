@@ -1,0 +1,23 @@
+name: Something doesn't work
+description: Connection problems, wrong readings, page errors
+labels: ["bug"]
+body:
+  - type: input
+    id: setup
+    attributes:
+      label: Phone / browser / adapter
+      placeholder: "iPhone 15, Bluefy, Vgate iCar Pro BLE"
+    validations:
+      required: true
+  - type: input
+    id: car
+    attributes:
+      label: Car
+      placeholder: "2016 XV 2.0i"
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Include any message shown under the header, and a screenshot if you can.
+    validations:
+      required: true
