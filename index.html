@@ -175,7 +175,7 @@ textarea.log{
 .dimmer{display:flex;align-items:center;gap:12px;margin:14px 0 16px;font-family:var(--font-display);font-weight:600}
 .dimmer input{flex:1;min-width:0;height:32px;accent-color:var(--fg)}
 .dimmer .hint{min-width:3.5em;text-align:right}
-/* A page can't touch the backlight, so dimming is a black layer over everything. */
+/* A page can't touch the backlight, so dimming is a black layer over everything (below the splash). */
 #dimShade{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:40}
 td.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
 td.chg{color:var(--accent);font-weight:600}
@@ -185,6 +185,93 @@ code{font-family:var(--font-mono);font-size:12.5px;background:var(--panel);paddi
 
 @media (prefers-reduced-motion: reduce){ .fill{transition:none} }
 </style>
+
+<!-- splash -->
+<!-- Swapped for a personal splash by personal/make.py; keep the markers. -->
+<style>
+/* Shown for ~5 s per load: a round trail badge with mountains over a starry night sky. Tap to skip. */
+#splash{
+  position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;background:radial-gradient(ellipse at 50% 30%, #13213a 0%, #060910 72%);color:#f4f1ea;
+  animation:splash-out .6s ease 5s forwards;cursor:pointer;padding:24px;overflow:hidden
+}
+#splashSky{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#splashSky .dot{fill:#fff;opacity:0;animation:splash-twinkle 2.4s ease-in-out infinite;animation-delay:var(--d)}
+#splash .art{position:relative;width:min(66vw,260px);height:auto;overflow:visible}
+#splash .disc{fill:#0d121b}
+#splash .rim{fill:none;stroke:#f0a830;stroke-width:5;stroke-dasharray:700;stroke-dashoffset:700;
+  animation:splash-draw 1s ease .15s forwards}
+#splash .inner{fill:none;stroke:#f4f1ea;stroke-width:1.2;opacity:0;animation:splash-faint .6s ease .9s forwards}
+#splash .peaks{opacity:0;transform:translateY(34px);animation:splash-rise .8s cubic-bezier(.2,.9,.3,1) .7s forwards}
+#splash .snow{fill:#f4f1ea}
+#splash .shade{fill:#9aa6b8}
+#splash .pine{fill:#0d121b;stroke:#f4f1ea;stroke-width:1.2;stroke-linejoin:round}
+#splash .name{font-family:var(--font-display);font-weight:700;font-size:40px;letter-spacing:5px;fill:#f4f1ea;
+  opacity:0;animation:splash-fade .5s ease 1.3s forwards}
+#splash .tag{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:6px;fill:#f0a830;
+  opacity:0;animation:splash-fade .5s ease 1.55s forwards}
+#splash .sub{position:relative;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em;color:#8a93a3;text-transform:uppercase;
+  opacity:0;animation:splash-fade .6s ease 2.1s forwards}
+#splash .credit{position:absolute;bottom:max(22px, env(safe-area-inset-bottom, 0px));left:0;right:0;text-align:center;margin:0;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.22em;color:#6f7a8c;text-transform:uppercase;
+  opacity:0;animation:splash-fade .8s ease 2.4s forwards}
+@keyframes splash-fade{to{opacity:1}}
+@keyframes splash-faint{to{opacity:.35}}
+@keyframes splash-twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
+@keyframes splash-draw{to{stroke-dashoffset:0}}
+@keyframes splash-rise{to{opacity:1;transform:none}}
+@keyframes splash-out{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion: reduce){
+  #splash,#splash *{animation-duration:.01s !important;animation-delay:0s !important;animation-iteration-count:1 !important}
+  #splash .peaks{transform:none}
+  #splash{animation:splash-out .3s ease 1.2s forwards !important}
+}
+</style>
+<div id="splash" aria-hidden="true">
+  <svg id="splashSky" preserveAspectRatio="xMidYMid slice" viewBox="0 0 400 800"></svg>
+  <svg class="art" viewBox="0 0 240 240">
+    <defs><clipPath id="discClip"><circle cx="120" cy="120" r="104"/></clipPath></defs>
+    <circle class="disc" cx="120" cy="120" r="108"/>
+    <circle class="rim" cx="120" cy="120" r="110" transform="rotate(-90 120 120)"/>
+    <circle class="inner" cx="120" cy="120" r="100"/>
+    <text class="name" x="123" y="92" text-anchor="middle">SUBIE</text>
+    <text class="tag" x="123" y="117" text-anchor="middle">OFF ROAD</text>
+    <g clip-path="url(#discClip)">
+      <g class="peaks">
+        <path class="shade" d="M0 232 L40 180 L66 196 L96 162 L118 182 L150 144 L178 172 L204 158 L240 198 L240 240 L0 240 Z"/>
+        <path class="snow" d="M14 240 L72 178 L88 194 L124 142 L156 184 L172 172 L232 240 Z"/>
+        <path class="shade" d="M124 142 L132 170 L120 184 L138 196 L128 214 L156 184 Z"/>
+        <path class="shade" d="M72 178 L78 198 L68 212 L88 194 Z"/>
+        <path class="shade" d="M172 172 L178 192 L190 202 L232 240 L210 240 L186 208 Z"/>
+        <path class="pine" d="M54 226 L62 206 L70 226 Z M66 228 L76 202 L86 228 Z M162 228 L172 204 L182 228 Z M176 230 L184 212 L192 230 Z"/>
+      </g>
+    </g>
+  </svg>
+  <div class="sub">OBD · CVT · AWD</div>
+  <p class="credit">Created by Netanel Liani</p>
+</div>
+<script>
+(function splash(){
+  const el = document.getElementById("splash");
+  if(!el) return;
+  const sky = document.getElementById("splashSky");
+  const NS = "http://www.w3.org/2000/svg";
+  for(let i = 0; i < 90; i++){
+    const c = document.createElementNS(NS, "circle");
+    c.setAttribute("cx", (Math.random() * 400).toFixed(1));
+    c.setAttribute("cy", (Math.random() * 800).toFixed(1));
+    c.setAttribute("r", (0.4 + Math.random() * 1.1).toFixed(2));
+    c.setAttribute("class", "dot");
+    c.style.setProperty("--d", (Math.random() * 2.4).toFixed(2) + "s");
+    sky.append(c);
+  }
+  const done = () => el.remove();
+  el.addEventListener("animationend", e => { if(e.target === el) done(); });
+  el.addEventListener("click", done);
+  setTimeout(done, 6500);   // in case animations never fire (some in-app browsers)
+})();
+</script>
+<!-- /splash -->
 
 <div class="top">
   <div class="brand">
