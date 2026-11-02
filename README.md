@@ -1,10 +1,10 @@
-# subie-gauge
+# subaru-obd2-gauge
 
 A live gauge cluster for your phone that reads a Subaru over OBD2 with a cheap Bluetooth adapter. It shows CVT temperature, coolant, engine oil, voltage, AWD duty, CVT ratio and lock-up, and logs every drive to a CSV file.
 
 It is one HTML file. You don't install anything, there's no account, and nothing leaves your phone.
 
-**Use it:** https://xv-gauge.vercel.app
+**Use it:** https://subaru-obd2-gauge.vercel.app
 
 ![Gauge cluster in demo mode](docs/screenshot.jpg)
 
