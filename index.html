@@ -435,10 +435,14 @@ const DEFAULTS = [
   { on:false, log:true, name:"TCU 113B?", hdr:"7E1", cmd:"22113B", rep:"62113B", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
   { on:false, log:true, name:"TCU 113C?", hdr:"7E1", cmd:"22113C", rep:"62113C", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
   { on:false, log:true, name:"TCU 1144?", hdr:"7E1", cmd:"221144", rep:"621144", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
-  { on:false, log:true, name:"TCU 1145?", hdr:"7E1", cmd:"221145", rep:"621145", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 }
+  { on:false, log:true, name:"TCU 1145?", hdr:"7E1", cmd:"221145", rep:"621145", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
+  // The five above don't track RPM or speed (2026-11-02 drives). Next candidates for turbine / pulley speed:
+  { on:false, log:true, name:"TCU 1142?", hdr:"7E1", cmd:"221142", rep:"621142", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
+  { on:false, log:true, name:"TCU 126E?", hdr:"7E1", cmd:"22126E", rep:"62126E", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
+  { on:false, log:true, name:"TCU 126F?", hdr:"7E1", cmd:"22126F", rep:"62126F", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 }
 ];
 
-const STORE_KEY = "xv-gauge-params-v5";   // v5: CVT warn 110 / crit 120 (plateau ~105 on long drives)
+const STORE_KEY = "xv-gauge-params-v6";   // v6: three more TCU candidates logged (1142, 126E, 126F)
 
 function loadParams(){
   try{
