@@ -898,6 +898,30 @@ async function readOne(p){
   return evaluate(p.f, bytes);
 }
 
+// Console helper for live checks from a laptop: same read-only guard, same queue as polling.
+//   await xv.read("7E1", "22113A")            → [bytes] or null
+//   await xv.readMany("7E1", ["2210D2", …])   → { "10D2": [bytes], … }
+const replyPrefix = cmd => (parseInt(cmd.slice(0, 2), 16) + 0x40).toString(16).toUpperCase() + cmd.slice(2);
+window.xv = {
+  read: (hdr, cmd) => exclusive(async () => {
+    if(hdr !== lastHeader){ await send("ATSH" + hdr, 2000); lastHeader = hdr; }
+    return extractBytes(await send(cmd, 2500), replyPrefix(cmd));
+  }),
+  readMany: (hdr, cmds) => exclusive(async () => {
+    if(hdr !== lastHeader){ await send("ATSH" + hdr, 2000); lastHeader = hdr; }
+    const out = {};
+    for(const cmd of cmds){
+      try{ out[cmd.slice(2)] = extractBytes(await send(cmd, 2500), replyPrefix(cmd)); }
+      catch(e){ out[cmd.slice(2)] = null; }
+      await pause(GAP_MS);
+    }
+    return out;
+  }),
+  last: () => samples[samples.length - 1],
+  samples, params,
+  connected: () => !!writeChar
+};
+
 const POLL_MS = 1000;
 const otherTask = () => scanning || watching || checking;
 
