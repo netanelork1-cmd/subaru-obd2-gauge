@@ -439,10 +439,15 @@ const DEFAULTS = [
   // The five above don't track RPM or speed (2026-11-02 drives). Next candidates for turbine / pulley speed:
   { on:false, log:true, name:"TCU 1142?", hdr:"7E1", cmd:"221142", rep:"621142", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
   { on:false, log:true, name:"TCU 126E?", hdr:"7E1", cmd:"22126E", rep:"62126E", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
-  { on:false, log:true, name:"TCU 126F?", hdr:"7E1", cmd:"22126F", rep:"62126F", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 }
+  { on:false, log:true, name:"TCU 126F?", hdr:"7E1", cmd:"22126F", rep:"62126F", f:"A*256+B", unit:"raw", min:0, max:65535, warn:999999, crit:999999 },
+  // Matched ActiveOBD at standstill on 2026-11-03 (P: turbine 736 / pulleys 0; D on brake: all 0).
+  // While driving, Pulley1 ÷ Pulley2 equals the CVT ratio. Converter slip = RPM − Turbine.
+  { on:false, log:true, name:"Turbine",  hdr:"7E1", cmd:"2210CB", rep:"6210CB", f:"A*32",    unit:"rpm", min:0, max:7000, warn:999999, crit:999999 },
+  { on:false, log:true, name:"Pulley 1", hdr:"7E1", cmd:"221146", rep:"621146", f:"A*256+B", unit:"rpm", min:0, max:7000, warn:999999, crit:999999 },
+  { on:false, log:true, name:"Pulley 2", hdr:"7E1", cmd:"221138", rep:"621138", f:"A*256+B", unit:"rpm", min:0, max:9000, warn:999999, crit:999999 }
 ];
 
-const STORE_KEY = "xv-gauge-params-v6";   // v6: three more TCU candidates logged (1142, 126E, 126F)
+const STORE_KEY = "xv-gauge-params-v7";   // v7: turbine and pulley speeds logged
 
 function loadParams(){
   try{
